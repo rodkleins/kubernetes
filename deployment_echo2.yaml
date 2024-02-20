@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: goserver-service-echo2
+spec:
+  selector:
+    app: goserver-echo2
+  #type: ClusterIP #LoadBalancer   
+  ports:
+  - name: goserver-service-echo2
+    port: 80
+    targetPort : 8000
+    protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goserver-echo2
+  labels:
+    app: goserver-echo2
+spec:
+  selector:
+     matchLabels:
+       app: goserver-echo2
+  replicas: 2
+  template:
+    metadata: 
+      labels:
+        app: "goserver-echo2"
+    spec:
+      containers:
+        - name: goserver-echo2
+          image: "rodrigokleint2/hello-go:echo2"
+          
+
